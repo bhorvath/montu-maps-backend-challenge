@@ -1,0 +1,4 @@
+{
+  "testEnvironment": "node",
+  "setupFilesAfterEnv": ["./test/jest/unit.setup.ts"]
+}
