@@ -1,5 +1,6 @@
 import { mockAddress } from "../test/mocks/tomtom";
 import { TomTomClient } from "./client";
+import { ValidationError } from "./errors/validation";
 import { TomTomBaseUrl, TomTomConfig } from "./types/client";
 
 describe("TomTomClient", () => {
@@ -14,6 +15,14 @@ describe("TomTomClient", () => {
       const result = client.getAutoCompleteDetails(mockAddress);
 
       expect(result).toBeInstanceOf(Promise);
+    });
+
+    it("throws an error if no address is provided", async () => {
+      const client = new TomTomClient(config);
+
+      await expect(client.getAutoCompleteDetails("")).rejects.toThrow(
+        ValidationError,
+      );
     });
   });
 });
