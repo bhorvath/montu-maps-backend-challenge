@@ -21,3 +21,12 @@ export type TomTomAddress = {
   country: string;
   countryCode: string;
 };
+
+export type AddressOptions = {
+  country: Country;
+};
+
+// See here for additional country codes: https://developer.tomtom.com/search-api/documentation/product-information/market-coverage
+export enum Country {
+  Australia = "AU",
+}

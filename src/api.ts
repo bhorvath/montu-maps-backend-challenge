@@ -1,23 +1,28 @@
 import axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
-import { TomTomAddress, TomTomConfig } from "./types/client";
+import { AddressOptions, TomTomAddress, TomTomConfig } from "./types/client";
 import { TomTomRawAddressResponse, TomTomRawAddressResult } from "./types/api";
 import { ApiError } from "./errors/api";
 import axiosRetry from "axios-retry";
 
+type TomTomParams = {
+  key: string;
+  countrySet?: string;
+};
+
 export const getSuggestions = async (
   config: TomTomConfig,
   address: string,
+  options?: AddressOptions,
 ): Promise<TomTomAddress[]> => {
   const instance = createInstanceWithRetry();
+
+  const params: TomTomParams = { key: config.key };
+  addRequestOptions(params, options);
 
   const response = await instance
     .get<TomTomRawAddressResponse>(
       `https://${config.baseUrl}/search/2/search/${address}.json`,
-      {
-        params: {
-          key: config.key,
-        },
-      },
+      { params },
     )
     .catch(handleAxiosError);
 
@@ -47,6 +52,19 @@ const createInstanceWithRetry = (): AxiosInstance => {
   });
 
   return instance;
+};
+
+const addRequestOptions = (
+  params: TomTomParams,
+  options?: AddressOptions,
+): void => {
+  if (!options) {
+    return;
+  }
+
+  if (options.country) {
+    params.countrySet = options.country;
+  }
 };
 
 const formatAddress = (rawAddress: TomTomRawAddressResult): TomTomAddress => {

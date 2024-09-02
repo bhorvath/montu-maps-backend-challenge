@@ -1,5 +1,6 @@
 import { config } from "dotenv";
 import {
+  Country,
   TomTomAddress,
   TomTomBaseUrl,
   TomTomConfig,
@@ -38,5 +39,19 @@ describe("Tomtom Places E2E Tests", () => {
     const result = await client.getAutoCompleteDetails("asfasffasfasafsafs");
 
     expect(result).toEqual([]);
+  });
+
+  it("allows addresses to be restricted to a particular country", async () => {
+    const client = new TomTomClient(config);
+    const oneResult = await client.getAutoCompleteDetails(
+      "Schaperstraße 18 10719 Berlin Germany",
+    );
+    const noResults = await client.getAutoCompleteDetails(
+      "Schaperstraße 18 10719 Berlin Germany",
+      { country: Country.Australia },
+    );
+
+    expect(oneResult.length).toBeGreaterThan(1);
+    expect(noResults.length).toBe(0);
   });
 });
