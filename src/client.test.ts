@@ -10,16 +10,16 @@ describe("TomTomClient", () => {
     key: "x",
   };
 
-  describe("getAutoCompleteDetails()", () => {
-    describe("constructor", () => {
-      it("throws an error if an API key is not provided", () => {
-        expect(
-          () =>
-            new TomTomClient({ baseUrl: TomTomBaseUrl.Default } as TomTomConfig)
-        ).toThrow(InvalidStateError);
-      });
+  describe("constructor", () => {
+    it("throws an error if an API key is not provided", () => {
+      expect(
+        () =>
+          new TomTomClient({ baseUrl: TomTomBaseUrl.Default } as TomTomConfig),
+      ).toThrow(InvalidStateError);
     });
+  });
 
+  describe("getAutoCompleteDetails()", () => {
     it("returns a promise", () => {
       const client = new TomTomClient(config);
       const result = client.getAutoCompleteDetails(mockAddress);
@@ -31,7 +31,7 @@ describe("TomTomClient", () => {
       const client = new TomTomClient(config);
 
       await expect(client.getAutoCompleteDetails("")).rejects.toThrow(
-        ValidationError
+        ValidationError,
       );
     });
   });
