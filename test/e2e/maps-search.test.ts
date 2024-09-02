@@ -54,4 +54,15 @@ describe("Tomtom Places E2E Tests", () => {
     expect(oneResult.length).toBeGreaterThan(1);
     expect(noResults.length).toBe(0);
   });
+
+  it("allows the number of returned addresses to be limited", async () => {
+    const client = new TomTomClient(config);
+    const manyResults = await client.getAutoCompleteDetails("10 high st");
+    const threeResults = await client.getAutoCompleteDetails("10 high st", {
+      limit: 3,
+    });
+
+    expect(manyResults.length).toBeGreaterThan(3);
+    expect(threeResults.length).toBe(3);
+  });
 });

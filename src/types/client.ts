@@ -23,7 +23,9 @@ export type TomTomAddress = {
 };
 
 export type AddressOptions = {
-  country: Country;
+  country?: Country;
+  // The TomTom API defaults to 10 if this isn't specified and has a maximum limit of 100.
+  limit?: number;
 };
 
 // See here for additional country codes: https://developer.tomtom.com/search-api/documentation/product-information/market-coverage

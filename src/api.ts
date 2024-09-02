@@ -7,6 +7,7 @@ import axiosRetry from "axios-retry";
 type TomTomParams = {
   key: string;
   countrySet?: string;
+  limit?: number;
 };
 
 export const getSuggestions = async (
@@ -64,6 +65,10 @@ const addRequestOptions = (
 
   if (options.country) {
     params.countrySet = options.country;
+  }
+
+  if (options.limit) {
+    params.limit = options.limit;
   }
 };
 
