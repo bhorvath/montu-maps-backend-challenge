@@ -3,6 +3,7 @@ import { TomTomAddress } from "../../src/types/client";
 
 export const mockAddress = "10 high st";
 export const mockBogusAddress = "non-existent address";
+export const mockErrorAddress = "error";
 
 export const mockTomTomResponseSuccess: TomTomRawAddressResponse = {
   results: [

@@ -1,23 +1,26 @@
-import axios from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { TomTomAddress } from "./types/client";
 import {
   TomTomApiConfig,
   TomTomRawAddressResponse,
   TomTomRawAddressResult,
 } from "./types/api";
+import { ApiError } from "./errors/api";
 
 export const getSuggestions = async (
   config: TomTomApiConfig,
   address: string,
 ): Promise<TomTomAddress[]> => {
-  const response = await axios.get<TomTomRawAddressResponse>(
-    `https://${config.baseUrl}/search/2/search/${address}.json`,
-    {
-      params: {
-        key: config.key,
+  const response = await axios
+    .get<TomTomRawAddressResponse>(
+      `https://${config.baseUrl}/search/2/search/${address}.json`,
+      {
+        params: {
+          key: config.key,
+        },
       },
-    },
-  );
+    )
+    .catch(handleAxiosError);
 
   const suggestions = response.data.results.map(formatAddress);
 
@@ -37,4 +40,24 @@ const formatAddress = (rawAddress: TomTomRawAddressResult): TomTomAddress => {
     country: rawAddress.address.country,
     countryCode: rawAddress.address.countryCode,
   };
+};
+
+const handleAxiosError = (
+  error: unknown,
+): AxiosResponse<TomTomRawAddressResponse> => {
+  let message: string;
+
+  if (error instanceof AxiosError) {
+    if (error.response?.data?.message) {
+      message = error.response.data.message;
+    } else if (error.request?.data?.message) {
+      message = error.request.data.message;
+    } else {
+      message = error.message;
+    }
+  } else {
+    message = error as string;
+  }
+
+  throw new ApiError(message);
 };

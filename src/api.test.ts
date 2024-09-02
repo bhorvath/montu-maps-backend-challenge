@@ -1,6 +1,12 @@
 import { getSuggestions } from "./api";
 import { TomTomApiConfig, TomTomBaseUrl } from "./types/api";
-import { mockAddress, mockBogusAddress, mockTomTomAddresses } from "../test/mocks/tomtom";
+import {
+  mockAddress,
+  mockBogusAddress,
+  mockErrorAddress,
+  mockTomTomAddresses,
+} from "../test/mocks/tomtom";
+import { ApiError } from "./errors/api";
 
 describe("getSuggestions()", () => {
   const config: TomTomApiConfig = {
@@ -18,5 +24,11 @@ describe("getSuggestions()", () => {
     const result = await getSuggestions(config, mockBogusAddress);
 
     expect(result).toEqual([]);
+  });
+
+  it("handles errors", async () => {
+    await expect(getSuggestions(config, mockErrorAddress)).rejects.toThrow(
+      ApiError,
+    );
   });
 });
