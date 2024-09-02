@@ -18,6 +18,14 @@ export class TomTomClient {
       throw new ValidationError("You must provide an address");
     }
 
+    // The TomTom API has a maximum limit of 100.
+    if (
+      options?.limit !== undefined &&
+      (options.limit < 1 || options.limit > 100)
+    ) {
+      throw new ValidationError("Limit must be between 1 and 100");
+    }
+
     return getSuggestions(this.config, address, options);
   }
 }

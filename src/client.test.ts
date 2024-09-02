@@ -34,5 +34,23 @@ describe("TomTomClient", () => {
         ValidationError,
       );
     });
+
+    const limitValidationTests: {
+      input: number;
+      description: string;
+    }[] = [
+      { input: 0, description: "less than 1" },
+      { input: 101, description: "greated than 100" },
+    ];
+
+    limitValidationTests.forEach(({ input, description }) => {
+      it(`throws an error if the given limit is ${description}`, async () => {
+        const client = new TomTomClient(config);
+
+        await expect(
+          client.getAutoCompleteDetails(mockAddress, { limit: input }),
+        ).rejects.toThrow(ValidationError);
+      });
+    });
   });
 });
