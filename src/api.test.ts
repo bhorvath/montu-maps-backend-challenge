@@ -1,5 +1,5 @@
+import { TomTomConfig, TomTomBaseUrl } from "./types/client";
 import { getSuggestions } from "./api";
-import { TomTomApiConfig, TomTomBaseUrl } from "./types/api";
 import {
   mockAddress,
   mockBogusAddress,
@@ -9,7 +9,7 @@ import {
 import { ApiError } from "./errors/api";
 
 describe("getSuggestions()", () => {
-  const config: TomTomApiConfig = {
+  const config: TomTomConfig = {
     baseUrl: TomTomBaseUrl.Default,
     key: "x",
   };

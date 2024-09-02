@@ -1,5 +1,5 @@
 import { http, HttpResponse } from "msw";
-import { TomTomBaseUrl } from "../../../src/types/api";
+import { TomTomBaseUrl } from "../../../src/types/client";
 import {
   mockAddress,
   mockBogusAddress,

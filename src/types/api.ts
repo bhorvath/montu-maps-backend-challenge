@@ -1,14 +1,3 @@
-export type TomTomApiConfig = {
-  baseUrl: TomTomBaseUrl;
-  key: string;
-};
-
-// See documentation: https://developer.tomtom.com/search-api/documentation/product-information/region-specific-content
-export enum TomTomBaseUrl {
-  Default = "api.tomtom.com",
-  SouthKorea = "kr-api.tomtom.com",
-}
-
 // Scaled down versions below of the full response with only the fields we care about.
 // See the documentation for more info: https://developer.tomtom.com/search-api/documentation/search-service/fuzzy-search#response-data
 

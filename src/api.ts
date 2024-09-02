@@ -1,14 +1,10 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { TomTomAddress } from "./types/client";
-import {
-  TomTomApiConfig,
-  TomTomRawAddressResponse,
-  TomTomRawAddressResult,
-} from "./types/api";
+import { TomTomAddress, TomTomConfig } from "./types/client";
+import { TomTomRawAddressResponse, TomTomRawAddressResult } from "./types/api";
 import { ApiError } from "./errors/api";
 
 export const getSuggestions = async (
-  config: TomTomApiConfig,
+  config: TomTomConfig,
   address: string,
 ): Promise<TomTomAddress[]> => {
   const response = await axios
