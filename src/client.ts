@@ -5,6 +5,12 @@ import { InvalidStateError } from "./errors/invalid-state";
 
 export class TomTomClient {
   constructor(private config: TomTomConfig) {
+    // TODO: Instead of requiring a base URL, set TomTomBaseUrl.Default if one
+    // isn't provided. I omitted this for now as it makes types a bit messy.
+    if (!config.baseUrl) {
+      throw new InvalidStateError("You must provide a base URL");
+    }
+
     if (!config.key) {
       throw new InvalidStateError("You must provide an API key");
     }

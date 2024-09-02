@@ -11,6 +11,12 @@ describe("TomTomClient", () => {
   };
 
   describe("constructor", () => {
+    it("throws an error if a base URL is not provided", () => {
+      expect(() => new TomTomClient({ key: "x" } as TomTomConfig)).toThrow(
+        InvalidStateError,
+      );
+    });
+
     it("throws an error if an API key is not provided", () => {
       expect(
         () =>
