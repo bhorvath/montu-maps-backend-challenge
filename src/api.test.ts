@@ -4,6 +4,7 @@ import {
   mockAddress,
   mockBogusAddress,
   mockErrorAddress,
+  mockRetryAddress,
   mockTomTomAddresses,
 } from "../test/mocks/tomtom";
 import { ApiError } from "./errors/api";
@@ -30,5 +31,11 @@ describe("getSuggestions()", () => {
     await expect(getSuggestions(config, mockErrorAddress)).rejects.toThrow(
       ApiError,
     );
+  });
+
+  it("retries requests up to 3 times if a 5xx error is returned", async () => {
+    const result = await getSuggestions(config, mockRetryAddress);
+
+    expect(result).toEqual(mockTomTomAddresses);
   });
 });

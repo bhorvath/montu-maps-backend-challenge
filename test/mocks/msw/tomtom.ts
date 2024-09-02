@@ -4,9 +4,12 @@ import {
   mockAddress,
   mockBogusAddress,
   mockErrorAddress,
+  mockRetryAddress,
   mockTomTomResponseEmpty,
   mockTomTomResponseSuccess,
 } from "../tomtom";
+
+let requestCount = 0;
 
 export const tomtomApis = [
   // Success response
@@ -31,6 +34,22 @@ export const tomtomApis = [
         status: 500,
         statusText: "Something went wrong",
       });
+    },
+  ),
+  // Error, error, success response
+  http.get(
+    `https://${TomTomBaseUrl.Default}/search/2/search/${encodeURI(mockRetryAddress)}.json`,
+    () => {
+      requestCount++;
+
+      if (requestCount < 3) {
+        return HttpResponse.json(null, {
+          status: 500,
+          statusText: "Something went wrong",
+        });
+      } else {
+        return HttpResponse.json(mockTomTomResponseSuccess);
+      }
     },
   ),
 ];
