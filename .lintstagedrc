@@ -1,0 +1,4 @@
+{
+  "./src/**/*.ts": ["yarn prettier --write", "yarn eslint --fix"],
+  "./test/**/*.ts": ["yarn prettier --write", "yarn eslint --fix"]
+}
