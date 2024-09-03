@@ -1,1 +1,2 @@
 yarn test:unit
+yarn test:e2e
