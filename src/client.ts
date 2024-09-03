@@ -16,6 +16,19 @@ export class TomTomClient {
     }
   }
 
+  /**
+   * Takes a partial address as an input and uses the TomTom API to return the
+   * best matching addresses broken down into their individual components.
+   *
+   * @param address The partial address to search for.
+   * @param options Options to modify the behaviour of the search.
+   * @param options.country The search can be restricted to a particular country.
+   * Only Australia is currently supported.
+   * @param options.limit A limit can be placed upon the number of suggestions
+   * returned. The maximum limit is 100.
+   *
+   * @returns An array of addresses broken down into their individual components.
+   */
   public async getAutoCompleteDetails(
     address: string,
     options?: AddressOptions,
